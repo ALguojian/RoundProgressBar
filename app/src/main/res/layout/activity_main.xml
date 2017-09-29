@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="com.guojian.roundprogressbar.MainActivity">
+
+    <com.guojian.library.RoundProgressBar
+        android:id="@+id/progress_bar_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:maxLong="100"
+        app:round_Progress_color="@color/colorAccent"
+        app:round_color="#555555"
+        app:round_width="3dp"
+        app:showText="true"
+        app:style="FILL" />
+
+    <SeekBar
+        android:id="@+id/seekBar_one"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp"
+        android:max="100" />
+
+
+    <com.guojian.library.RoundProgressBar
+        android:id="@+id/progress_bar_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:maxLong="100"
+        app:round_Progress_color="#666"
+        app:round_color="@color/colorAccent"
+        app:round_width="3dp"
+        app:showText="true"
+        app:style="STROKE"
+        app:textSize="16sp"
+        app:text_name_color="#57caa1" />
+
+
+    <SeekBar
+        android:id="@+id/seekBar_two"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:max="100" />
+
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RoundProgressBar">
+
+        <attr name="round_color" format="color"/>
+
+        <attr name="round_Progress_color" format="color"/>
+
+        <attr name="round_width" format="dimension"/>
+
+        <attr name="text_name_color" format="color"/>
+
+        <attr name="textSize" format="dimension"/>
+
+        <attr name="maxLong" format="integer"/>
+
+        <attr name="showText" format="boolean"/>
+
+        <attr name="style">
+
+            <enum name="STROKE" value="0"/>
+            <enum name="FILL" value="1"/>
+        </attr>
+
+    </declare-styleable>
+
+</resources>
