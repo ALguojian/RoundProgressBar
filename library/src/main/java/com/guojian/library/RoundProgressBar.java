@@ -81,7 +81,7 @@ public class RoundProgressBar extends View {
 
         maxLong = typedArray.getInteger(R.styleable.RoundProgressBar_maxLong, 100);
 
-        textShow = typedArray.getBoolean(R.styleable.RoundProgressBar_showText, true);
+        textShow = typedArray.getBoolean(R.styleable.RoundProgressBar_showText, false);
 
         style = typedArray.getInt(R.styleable.RoundProgressBar_style, 0);
 
