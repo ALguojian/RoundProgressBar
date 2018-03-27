@@ -324,13 +324,6 @@ public class RoundProgressBar extends View {
             canvas.drawText(textName, center - textWidth / 2, center + margeSize + paint.getTextSize() / 2, paint);
 
 
-//        //初始化画笔
-//        paint = new Paint();
-//        paint.setStrokeWidth(0);//设置stroke宽度
-//        paint.setColor(numColor);//设置绘制字体的颜色
-//        paint.setTextSize(numSize);
-//        paint.setTypeface(Typeface.DEFAULT);//设置文字的style
-
         int percent = (int) (((float) progress / (float) maxLong) * 100);//得到进度值
 
         float textWidth2 = paint.measureText(percent + "/" + maxLong);
