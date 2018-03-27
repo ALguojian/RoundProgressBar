@@ -44,6 +44,9 @@ public class RoundProgressBar extends View {
     private float margeSize;//距离大小
     private String textName;//距离大小
 
+    public RoundProgressBar(Context context) {
+        super(context);
+    }
 
     public RoundProgressBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
