@@ -28,7 +28,9 @@ public class RoundProgressBar extends View {
     private int roundColor;//圆环颜色
     private int roungProgressColor;//进度条颜色
     private int textColor;//文字颜色
+    private int numColor;//数字颜色
     private float testSize;//字体大小
+    private float numSize;//数字大小
     private float roundWidth;//圆环宽度
     private int maxLong;//最大值
     private int progress;//进度值
@@ -39,6 +41,8 @@ public class RoundProgressBar extends View {
     private OnProgressListener onProgressListener;//进度接口
     private int center;//圆环中心
     private int radius;//圆环半径
+    private float margeSize;//距离大小
+    private String textName;//距离大小
 
 
     public RoundProgressBar(Context context, @Nullable AttributeSet attrs) {
@@ -46,12 +50,6 @@ public class RoundProgressBar extends View {
         init(context, attrs);
     }
 
-//    public RoundProgressBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
-//        super(context, attrs, defStyleAttr);
-//        init(context, attrs);
-//
-//
-//    }
 
     private void init(Context context, @Nullable AttributeSet attrs) {
         //初始化默认宽高值
@@ -66,7 +64,15 @@ public class RoundProgressBar extends View {
 
         textColor = typedArray.getColor(R.styleable.RoundProgressBar_text_name_color, Color.YELLOW);
 
+        numColor = typedArray.getColor(R.styleable.RoundProgressBar_num_color, Color.YELLOW);
+
         testSize = typedArray.getDimension(R.styleable.RoundProgressBar_textSize, 15);
+
+        margeSize = typedArray.getDimension(R.styleable.RoundProgressBar_margeSize, 30);
+
+        numSize = typedArray.getDimension(R.styleable.RoundProgressBar_numSize, 15);
+
+        textName = typedArray.getString(R.styleable.RoundProgressBar_textName);
 
         roundWidth = typedArray.getDimension(R.styleable.RoundProgressBar_round_width, 5);
 
@@ -247,12 +253,44 @@ public class RoundProgressBar extends View {
         this.textColor = textColor;
     }
 
+    public int getnumColor() {
+        return numColor;
+    }
+
+    public void setnumColor(int textColor) {
+        this.numColor = textColor;
+    }
+
     public float getTestSize() {
         return testSize;
     }
 
     public void setTestSize(float testSize) {
         this.testSize = testSize;
+    }
+
+    public float getnumSize() {
+        return numSize;
+    }
+
+    public void setnumSize(float testSize) {
+        this.numSize = testSize;
+    }
+
+    public String getTextName() {
+        return textName;
+    }
+
+    public void setTextName(String testSize) {
+        this.textName = testSize;
+    }
+
+    public float getMargeSize() {
+        return margeSize;
+    }
+
+    public void setMargeSize(float testSize) {
+        this.margeSize = testSize;
     }
 
     public float getRoundWidth() {
@@ -268,6 +306,8 @@ public class RoundProgressBar extends View {
      * 绘制文本内容
      */
     private void drawText(Canvas canvas) {
+
+
         //初始化画笔
         paint = new Paint();
         paint.setStrokeWidth(0);//设置stroke宽度
@@ -275,13 +315,27 @@ public class RoundProgressBar extends View {
         paint.setTextSize(testSize);
         paint.setTypeface(Typeface.DEFAULT);//设置文字的style
 
+        float textWidth = paint.measureText(textName);
+        //绘制文本 会根据设置的是否显示文本的属性&是否是Stroke的样式进行判断
+        if (textShow && style == STROKE)
+            canvas.drawText(textName, center - textWidth / 2, center + margeSize + paint.getTextSize() / 2, paint);
+
+
+//        //初始化画笔
+//        paint = new Paint();
+//        paint.setStrokeWidth(0);//设置stroke宽度
+//        paint.setColor(numColor);//设置绘制字体的颜色
+//        paint.setTextSize(numSize);
+//        paint.setTypeface(Typeface.DEFAULT);//设置文字的style
+
         int percent = (int) (((float) progress / (float) maxLong) * 100);//得到进度值
 
-        float textWidth = paint.measureText(percent + "%");//得到文字宽度通过测量画笔绘制的内容
+        float textWidth2 = paint.measureText(percent + "/" + maxLong);
+
 
         //绘制文本 会根据设置的是否显示文本的属性&是否是Stroke的样式进行判断
         if (textShow && percent != 0 && style == STROKE)
-            canvas.drawText(percent + "%", center - textWidth / 2, center + testSize / 2, paint);
+            canvas.drawText(percent + "/" + maxLong, center - textWidth2 / 2, center - margeSize, paint);
 
     }
 

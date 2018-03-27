@@ -13,11 +13,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:maxLong="100"
+        app:numSize="16dp"
+        app:num_color="#123456"
         app:round_Progress_color="@color/colorAccent"
         app:round_color="#555555"
         app:round_width="3dp"
         app:showText="true"
-        app:style="FILL" />
+        app:style="FILL"
+        app:textSize="16sp"
+        app:textName="去招募"
+        app:text_name_color="#57caa1" />
 
     <SeekBar
         android:id="@+id/seekBar_one"
@@ -32,12 +37,16 @@
         android:id="@+id/progress_bar_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:maxLong="100"
+        app:maxLong="60"
+        app:numSize="16dp"
+        app:num_color="#123456"
         app:round_Progress_color="#666"
         app:round_color="@color/colorAccent"
         app:round_width="3dp"
         app:showText="true"
         app:style="STROKE"
+        app:textName="去招募"
+        app:margeSize="10dp"
         app:textSize="16sp"
         app:text_name_color="#57caa1" />
 
