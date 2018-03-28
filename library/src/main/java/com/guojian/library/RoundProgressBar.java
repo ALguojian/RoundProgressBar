@@ -43,10 +43,13 @@ public class RoundProgressBar extends View {
     private int radius;//圆环半径
     private float margeSize;//距离大小
     private String textName;//距离大小
+    private static final int ROUND_STYLE_STROKE = 1;//圆环
+    private static final int ROUND_STYLE_FILL = 2;//扇形结构
 
     public RoundProgressBar(Context context) {
         super(context);
     }
+
 
     public RoundProgressBar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -56,7 +59,8 @@ public class RoundProgressBar extends View {
 
     private void init(Context context, @Nullable AttributeSet attrs) {
         //初始化默认宽高值
-        defaultWidthAndHeight = dpTopx(100);
+        if (0 == getWidthAndHeight())
+            defaultWidthAndHeight = dpTopx(74);
 
         //初始化属性
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundProgressBar);
@@ -281,6 +285,14 @@ public class RoundProgressBar extends View {
         this.numSize = testSize;
     }
 
+    public int getRoundStyle() {
+        return style;
+    }
+
+    public void setRoundStyle(int style) {
+        this.style = style;
+    }
+
     public String getTextName() {
         return textName;
     }
@@ -305,6 +317,14 @@ public class RoundProgressBar extends View {
         this.roundWidth = roundWidth;
     }
 
+    public void setWidthAndHeight(int width) {
+
+        this.defaultWidthAndHeight = dpTopx(width);
+    }
+
+    public int getWidthAndHeight() {
+        return defaultWidthAndHeight;
+    }
 
     /**
      * 绘制文本内容
