@@ -1,5 +1,6 @@
 package com.guojian.roundprogressbar;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.SeekBar;
@@ -10,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected RoundProgressBar progressBar1;
     protected RoundProgressBar progressBar2;
+    protected RoundProgressBar progressBar3;
     protected SeekBar seekBarOne;
     protected SeekBar seekBarTwo;
 
@@ -27,6 +29,16 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         progressBar1 = (RoundProgressBar) findViewById(R.id.progress_bar_1);
         progressBar2 = (RoundProgressBar) findViewById(R.id.progress_bar_2);
+        progressBar3 = (RoundProgressBar) findViewById(R.id.asd);
+
+        progressBar3.setRoundColor(Color.parseColor("#648dbc"));
+
+        progressBar3.setRoungProgressColor(Color.parseColor("#3090FF"));
+
+        progressBar3.setMaxLong(100);
+
+        progressBar3.setProgress(30);
+
         seekBarOne = (SeekBar) findViewById(R.id.seekBar_one);
         seekBarTwo = (SeekBar) findViewById(R.id.seekBar_two);
         seekBarOne.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

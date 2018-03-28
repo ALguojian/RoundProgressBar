@@ -59,4 +59,11 @@
         android:max="100" />
 
 
+
+    <com.guojian.library.RoundProgressBar
+       android:id="@+id/asd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
 </LinearLayout>

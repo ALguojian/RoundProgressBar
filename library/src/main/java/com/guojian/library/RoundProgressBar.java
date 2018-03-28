@@ -97,7 +97,8 @@ public class RoundProgressBar extends View {
         radius = (int) (center - roundWidth / 2);
 
         drawCircle(canvas); //绘制外层圆环
-        drawText(canvas);//绘制文本内容
+        if (textShow)
+            drawText(canvas);//绘制文本内容
         drawProgressBar(canvas);
 
     }
@@ -320,7 +321,7 @@ public class RoundProgressBar extends View {
 
         float textWidth = paint.measureText(textName);
         //绘制文本 会根据设置的是否显示文本的属性&是否是Stroke的样式进行判断
-        if (textShow && style == STROKE)
+        if (style == STROKE)
             canvas.drawText(textName, center - textWidth / 2, center + margeSize + paint.getTextSize() / 2, paint);
 
 
@@ -330,7 +331,7 @@ public class RoundProgressBar extends View {
 
 
         //绘制文本 会根据设置的是否显示文本的属性&是否是Stroke的样式进行判断
-        if (textShow && percent != 0 && style == STROKE)
+        if (style == STROKE)
             canvas.drawText(percent + "/" + maxLong, center - textWidth2 / 2, center - margeSize, paint);
 
     }
