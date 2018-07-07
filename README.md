@@ -1,7 +1,6 @@
 # 自定义进度条
 
-![](https://ws1.sinaimg.cn/mw690/3d6cbc08gy1ft1a1y65ywj20tb1g3q71.jpg)
-
+![](http://ouvjn19yd.bkt.clouddn.com/WechatIMG2.png)
 
 最新版本如下：
 
