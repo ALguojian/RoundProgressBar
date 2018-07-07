@@ -1,5 +1,8 @@
 # 自定义进度条
 
+![](https://ws1.sinaimg.cn/mw690/3d6cbc08gy1ft1a1y65ywj20tb1g3q71.jpg)
+
+
 最新版本如下：
 
 [![](https://jitpack.io/v/ALguojian/RoundProgressBar.svg)](https://jitpack.io/#ALguojian/RoundProgressBar)
