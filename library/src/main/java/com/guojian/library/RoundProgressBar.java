@@ -20,6 +20,10 @@ import android.view.View;
 public class RoundProgressBar extends View {
 
 
+    public static final int STROKE = 0;//空心样式
+    public static final int FILL = 1;//实心样式
+    private static final int ROUND_STYLE_STROKE = 1;//圆环
+    private static final int ROUND_STYLE_FILL = 2;//扇形结构
     private Paint paint;//画笔对象
     private int width;//view宽度
     private int height;//view高度
@@ -36,15 +40,11 @@ public class RoundProgressBar extends View {
     private int progress;//进度值
     private boolean textShow;//是否显示文字
     private int style;//进度条样式
-    public static final int STROKE = 0;//空心样式
-    public static final int FILL = 1;//实心样式
     private OnProgressListener onProgressListener;//进度接口
     private int center;//圆环中心
     private int radius;//圆环半径
     private float margeSize;//距离大小
     private String textName;//距离大小
-    private static final int ROUND_STYLE_STROKE = 1;//圆环
-    private static final int ROUND_STYLE_FILL = 2;//扇形结构
 
     public RoundProgressBar(Context context) {
         super(context);
@@ -92,6 +92,34 @@ public class RoundProgressBar extends View {
         typedArray.recycle();
     }
 
+    public int getWidthAndHeight() {
+        return defaultWidthAndHeight;
+    }
+
+    public void setWidthAndHeight(int width) {
+
+        this.defaultWidthAndHeight = dpTopx(width);
+    }
+
+    /**
+     * dp转化px
+     */
+    public int dpTopx(int dp) {
+
+        float density = getContext().getResources().getDisplayMetrics().density;
+        return (int) (dp * density + 0.5f);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        //确定view的宽高
+        width = w;
+        height = h;
+        //初始化padding，默认值
+        padding = dpTopx(5);
+    }
+
     @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
@@ -105,44 +133,6 @@ public class RoundProgressBar extends View {
             drawText(canvas);//绘制文本内容
         drawProgressBar(canvas);
 
-    }
-
-    /**
-     * 绘制圆环进度条
-     *
-     * @param canvas
-     */
-    private void drawProgressBar(Canvas canvas) {
-        //初始化画笔
-        paint = new Paint();
-        paint.setStrokeWidth(roundWidth);
-        paint.setColor(roungProgressColor);
-
-        //空心圆环
-        RectF stroke_one = new RectF(center - radius, center - radius, center + radius, center + radius);
-
-        RectF stroke_two = new RectF(center - radius + roundWidth + padding,
-                center - radius + roundWidth + padding,
-                center + radius - roundWidth - padding,
-                center + radius - roundWidth - padding);
-
-        paint.setStrokeCap(Paint.Cap.ROUND);
-
-        switch (style) {
-
-            case STROKE:
-
-                paint.setStyle(Paint.Style.STROKE);
-                canvas.drawArc(stroke_one, -90, 360 * progress / 100, false, paint);
-                break;
-
-            case FILL:
-
-                paint.setStyle(Paint.Style.FILL_AND_STROKE);
-                if (progress != 0)
-                    canvas.drawArc(stroke_two, -90, 360 * progress / 100, true, paint);
-                break;
-        }
     }
 
     @Override
@@ -171,14 +161,88 @@ public class RoundProgressBar extends View {
 
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        //确定view的宽高
-        width = w;
-        height = h;
-        //初始化padding，默认值
-        padding = dpTopx(5);
+    /**
+     * 绘制外层圆环
+     *
+     * @param canvas
+     */
+    private void drawCircle(Canvas canvas) {
+        //初始化画笔
+        paint = new Paint();
+        paint.setColor(roundColor);//设置画笔颜色
+        paint.setStyle(Paint.Style.STROKE);//设置画笔样式
+        paint.setStrokeWidth(roundWidth);//设置STROKE的宽度
+        paint.setAntiAlias(true);//设置抗锯齿
+        canvas.drawCircle(center, center, radius, paint);//绘制圆形
+    }
+
+    /**
+     * 绘制文本内容
+     */
+    private void drawText(Canvas canvas) {
+
+        //初始化画笔
+        paint = new Paint();
+        paint.setStrokeWidth(0);//设置stroke宽度
+        paint.setColor(textColor);//设置绘制字体的颜色
+        paint.setTextSize(testSize);
+        paint.setAntiAlias(true);//设置抗锯齿
+        paint.setTypeface(Typeface.DEFAULT);//设置文字的style
+
+        float textWidth = paint.measureText(textName);
+        //绘制文本 会根据设置的是否显示文本的属性&是否是Stroke的样式进行判断
+        if (style == STROKE)
+            canvas.drawText(textName, center - textWidth / 2, center + margeSize + paint.getTextSize() / 2, paint);
+
+        int percent = (int) (((float) progress / (float) maxLong) * 100);//得到进度值
+
+        float textWidth2 = paint.measureText(percent + "/" + maxLong);
+
+        //绘制文本 会根据设置的是否显示文本的属性&是否是Stroke的样式进行判断
+        if (style == STROKE)
+            canvas.drawText(percent + "/" + maxLong, center - textWidth2 / 2, center - margeSize, paint);
+
+    }
+
+    /**
+     * 绘制圆环进度条
+     *
+     * @param canvas
+     */
+    private void drawProgressBar(Canvas canvas) {
+        //初始化画笔
+        paint = new Paint();
+        paint.setStrokeWidth(roundWidth);
+        paint.setAntiAlias(true);//设置抗锯齿
+        paint.setColor(roungProgressColor);
+
+        //空心圆环
+        RectF stroke_one = new RectF(center - radius, center - radius, center + radius, center + radius);
+
+        RectF stroke_two = new RectF(center - radius + roundWidth + padding,
+                center - radius + roundWidth + padding,
+                center + radius - roundWidth - padding,
+                center + radius - roundWidth - padding);
+
+        paint.setStrokeCap(Paint.Cap.ROUND);
+
+        switch (style) {
+
+            case STROKE:
+
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawArc(stroke_one, -90, 360 * progress / 100, false, paint);
+                break;
+
+            case FILL:
+
+                paint.setStyle(Paint.Style.FILL_AND_STROKE);
+                if (progress != 0)
+                    canvas.drawArc(stroke_two, -90, 360 * progress / 100, true, paint);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -202,7 +266,6 @@ public class RoundProgressBar extends View {
         }
         this.maxLong = maxLong;
     }
-
 
     /**
      * 获得当前进度值
@@ -317,79 +380,14 @@ public class RoundProgressBar extends View {
         this.roundWidth = roundWidth;
     }
 
-    public void setWidthAndHeight(int width) {
-
-        this.defaultWidthAndHeight = dpTopx(width);
+    public void setOnProgressListener(OnProgressListener onProgressListener) {
+        this.onProgressListener = onProgressListener;
     }
-
-    public int getWidthAndHeight() {
-        return defaultWidthAndHeight;
-    }
-
-    /**
-     * 绘制文本内容
-     */
-    private void drawText(Canvas canvas) {
-
-
-        //初始化画笔
-        paint = new Paint();
-        paint.setStrokeWidth(0);//设置stroke宽度
-        paint.setColor(textColor);//设置绘制字体的颜色
-        paint.setTextSize(testSize);
-        paint.setTypeface(Typeface.DEFAULT);//设置文字的style
-
-        float textWidth = paint.measureText(textName);
-        //绘制文本 会根据设置的是否显示文本的属性&是否是Stroke的样式进行判断
-        if (style == STROKE)
-            canvas.drawText(textName, center - textWidth / 2, center + margeSize + paint.getTextSize() / 2, paint);
-
-
-        int percent = (int) (((float) progress / (float) maxLong) * 100);//得到进度值
-
-        float textWidth2 = paint.measureText(percent + "/" + maxLong);
-
-
-        //绘制文本 会根据设置的是否显示文本的属性&是否是Stroke的样式进行判断
-        if (style == STROKE)
-            canvas.drawText(percent + "/" + maxLong, center - textWidth2 / 2, center - margeSize, paint);
-
-    }
-
-    /**
-     * 绘制外层圆环
-     *
-     * @param canvas
-     */
-    private void drawCircle(Canvas canvas) {
-        //初始化画笔
-        paint = new Paint();
-        paint.setColor(roundColor);//设置画笔颜色
-        paint.setStyle(Paint.Style.STROKE);//设置画笔样式
-        paint.setStrokeWidth(roundWidth);//设置STROKE的宽度
-        paint.setAntiAlias(true);//设置抗锯齿
-        canvas.drawCircle(center, center, radius, paint);//绘制圆形
-    }
-
-
-    /**
-     * dp转化px
-     */
-    public int dpTopx(int dp) {
-
-        float density = getContext().getResources().getDisplayMetrics().density;
-        return (int) (dp * density + 0.5f);
-    }
-
 
     /**
      * 进度调度接口
      */
     public interface OnProgressListener {
         void progressListener();
-    }
-
-    public void setOnProgressListener(OnProgressListener onProgressListener) {
-        this.onProgressListener = onProgressListener;
     }
 }

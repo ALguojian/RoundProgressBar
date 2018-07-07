@@ -35,14 +35,14 @@
 
     <com.guojian.library.RoundProgressBar
         android:id="@+id/progress_bar_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         app:maxLong="60"
         app:numSize="16dp"
         app:num_color="#123456"
         app:round_Progress_color="#666"
         app:round_color="@color/colorAccent"
-        app:round_width="3dp"
+        app:round_width="8dp"
         app:showText="true"
         app:style="STROKE"
         app:textName="去招募"
