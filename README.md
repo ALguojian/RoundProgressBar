@@ -21,6 +21,8 @@ dependencies {
         implementation 'com.github.ALguojian:RoundProgressBar:2.2.2'
 }
 ```
+
+```
  <com.guojian.library.RoundProgressBar
         android:id="@+id/progress_bar_2"
         android:layout_width="wrap_content"
