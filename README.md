@@ -1,6 +1,25 @@
 # 自定义进度条
 
+最新版本如下：
 
+[![](https://jitpack.io/v/ALguojian/RoundProgressBar.svg)](https://jitpack.io/#ALguojian/RoundProgressBar)
+
+1.Add it in your root build.gradle at the end of repositories:
+
+```
+allprojects {
+         repositories {
+            ...
+             maven { url 'https://jitpack.io' }
+            }
+    }
+```
+2.Add the dependency
+
+```
+dependencies {
+        implementation 'com.github.ALguojian:RoundProgressBar:2.2.2'
+}
 ```
  <com.guojian.library.RoundProgressBar
         android:id="@+id/progress_bar_2"
